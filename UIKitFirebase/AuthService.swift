@@ -9,6 +9,8 @@ import Foundation
 import FirebaseAuth
 import GoogleSignIn
 import FirebaseCore
+import CryptoKit
+import AuthenticationServices
 
 enum AuthError: LocalizedError {
     case noClientID
@@ -35,6 +37,7 @@ enum AuthError: LocalizedError {
 
 protocol AuthServiceProtocol {
     func signInWithGoogle(presenting viewController: UIViewController) async throws -> User
+    func signInWithApple(idToken: String, nonce: String) async throws -> User
     func signInWithEmail(_ email: String, password: String) async throws -> User
     func signOut() throws
     func getCurrentUser() -> User?
@@ -73,6 +76,21 @@ class AuthService: AuthServiceProtocol {
         )
         
         // Sign in to Firebase
+        do {
+            let authResult = try await Auth.auth().signIn(with: credential)
+            return authResult.user
+        } catch {
+            throw AuthError.firebaseAuthFailed(error)
+        }
+    }
+    
+    // MARK: - Apple Sign In
+    func signInWithApple(idToken: String, nonce: String) async throws -> User {
+        let credential = OAuthProvider.credential(
+            providerID: AuthProviderID.apple,
+            idToken: idToken,
+            rawNonce: nonce)
+        
         do {
             let authResult = try await Auth.auth().signIn(with: credential)
             return authResult.user
