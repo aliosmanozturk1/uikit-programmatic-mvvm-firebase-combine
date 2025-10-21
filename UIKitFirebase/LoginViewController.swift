@@ -7,12 +7,15 @@
 
 import UIKit
 import FirebaseAuth
+import AuthenticationServices
 
 class LoginViewController: UIViewController {
     
     // MARK: - Properties
     private let loginView = LoginView()
     private let viewModel = LoginViewModel()
+    
+    private var currentNonce: String?
     
     // MARK: - Lifecycle
     override func loadView() {
@@ -63,9 +66,19 @@ extension LoginViewController: LoginViewDelegate {
     }
     
     func loginViewDidTapApple(_ view: LoginView) {
-        // Apple sign in logic
-        print("Apple sign in tapped")
-    }
+            let nonce = AppleSignInHelper.randomNonceString()
+            currentNonce = nonce
+            
+            let appleIDProvider = ASAuthorizationAppleIDProvider()
+            let request = appleIDProvider.createRequest()
+            request.requestedScopes = [.fullName, .email]
+            request.nonce = AppleSignInHelper.sha256(nonce)
+            
+            let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+            authorizationController.delegate = self
+            authorizationController.presentationContextProvider = self
+            authorizationController.performRequests()
+        }
     
     func loginViewDidTapSignup(_ view: LoginView) {
         // Navigate to signup screen
@@ -85,6 +98,42 @@ extension LoginViewController: LoginViewModelDelegate {
     
     func loginViewModel(_ viewModel: LoginViewModel, didChangeLoadingState isLoading: Bool) {
         loginView.setLoading(isLoading)
+    }
+}
+
+extension LoginViewController: ASAuthorizationControllerDelegate {
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else {
+            showAlert(message: "Unable to retrieve Apple ID Credential")
+            return
+        }
+        
+        guard let nonce = currentNonce else {
+            showAlert(message: "Invalid state: A login callback was received, but no login request was sent.")
+            return
+        }
+        
+        guard let appleIDToken = appleIDCredential.identityToken else {
+            showAlert(message: "Unable to fetch identity token")
+            return
+        }
+        
+        guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
+            showAlert(message: "Unable to serialize token string from data")
+            return
+        }
+        
+        viewModel.loginWithApple(idToken: idTokenString, nonce: nonce, fullName: appleIDCredential.fullName)
+    }
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        showAlert(message: "Sign in with Apple errored: \(error.localizedDescription)")
+    }
+}
+
+extension LoginViewController: ASAuthorizationControllerPresentationContextProviding {
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return view.window!
     }
 }
 

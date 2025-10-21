@@ -37,7 +37,7 @@ enum AuthError: LocalizedError {
 
 protocol AuthServiceProtocol {
     func signInWithGoogle(presenting viewController: UIViewController) async throws -> User
-    func signInWithApple(idToken: String, nonce: String) async throws -> User
+    func signInWithApple(idToken: String, nonce: String, fullName: PersonNameComponents?) async throws -> User
     func signInWithEmail(_ email: String, password: String) async throws -> User
     func signOut() throws
     func getCurrentUser() -> User?
@@ -85,11 +85,12 @@ class AuthService: AuthServiceProtocol {
     }
     
     // MARK: - Apple Sign In
-    func signInWithApple(idToken: String, nonce: String) async throws -> User {
-        let credential = OAuthProvider.credential(
-            providerID: AuthProviderID.apple,
-            idToken: idToken,
-            rawNonce: nonce)
+    func signInWithApple(idToken: String, nonce: String, fullName: PersonNameComponents?) async throws -> User {
+        let credential = OAuthProvider.appleCredential(
+            withIDToken: idToken,
+            rawNonce: nonce,
+            fullName: fullName
+        )
         
         do {
             let authResult = try await Auth.auth().signIn(with: credential)
