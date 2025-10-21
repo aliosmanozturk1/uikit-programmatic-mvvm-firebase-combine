@@ -5,13 +5,14 @@
 //  Created by Ali Osman Öztürk on 21.10.2025.
 //
 
-import GoogleSignIn
 import UIKit
+import FirebaseAuth
 
 class LoginViewController: UIViewController {
     
     // MARK: - Properties
     private let loginView = LoginView()
+    private let viewModel = LoginViewModel()
     
     // MARK: - Lifecycle
     override func loadView() {
@@ -21,29 +22,44 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loginView.delegate = self
+        viewModel.delegate = self
+        
+        // Check if user is already logged in
+        if let user = viewModel.checkCurrentUser() {
+            navigateToHome(user: user)
+        }
+    }
+    
+    // MARK: - Helper Methods
+    private func navigateToHome(user: User) {
+        print("User logged in: \(user.email ?? "No email")")
+        print("User ID: \(user.uid)")
+        print("Display Name: \(user.displayName ?? "No name")")
+        // Navigate to home screen
+        // let homeVC = HomeViewController()
+        // navigationController?.setViewControllers([homeVC], animated: true)
+    }
+    
+    private func showAlert(message: String) {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
     }
 }
 
 // MARK: - LoginViewDelegate
 extension LoginViewController: LoginViewDelegate {
     func loginViewDidTapLogin(_ view: LoginView, email: String?, password: String?) {
-        guard let email = email, let password = password else {
-            showAlert(message: "Please enter email and password")
-            return
-        }
-        
-        // Firebase login logic burada
-        print("Login with: \(email)")
+        viewModel.loginWithEmail(email: email, password: password)
     }
     
     func loginViewDidTapForgotPassword(_ view: LoginView) {
-        // Forgot password flow
+        // Navigate to forgot password screen
         print("Forgot password tapped")
     }
     
     func loginViewDidTapGoogle(_ view: LoginView) {
-        // Google sign in logic
-        print("Google sign in tapped")
+        viewModel.loginWithGoogle(presenting: self)
     }
     
     func loginViewDidTapApple(_ view: LoginView) {
@@ -55,12 +71,20 @@ extension LoginViewController: LoginViewDelegate {
         // Navigate to signup screen
         print("Signup tapped")
     }
+}
+
+// MARK: - LoginViewModelDelegate
+extension LoginViewController: LoginViewModelDelegate {
+    func loginViewModel(_ viewModel: LoginViewModel, didLoginSuccessfully user: User) {
+        navigateToHome(user: user)
+    }
     
-    // MARK: - Helper
-    private func showAlert(message: String) {
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alert, animated: true)
+    func loginViewModel(_ viewModel: LoginViewModel, didFailWithError error: String) {
+        showAlert(message: error)
+    }
+    
+    func loginViewModel(_ viewModel: LoginViewModel, didChangeLoadingState isLoading: Bool) {
+        loginView.setLoading(isLoading)
     }
 }
 

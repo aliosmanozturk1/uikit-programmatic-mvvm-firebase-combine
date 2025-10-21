@@ -186,6 +186,24 @@ class LoginView: UIView {
         return button
     }()
     
+    private lazy var loadingIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.color = .white
+        indicator.hidesWhenStopped = true
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
+    
+    // Container for all content (to dim when loading)
+    private lazy var contentStackView: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.alignment = .fill
+        stack.spacing = 14
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+    
     // MARK: - Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -220,42 +238,52 @@ class LoginView: UIView {
             signupStack.bottomAnchor.constraint(equalTo: signupContainer.bottomAnchor)
         ])
         
-        let stack = UIStackView(arrangedSubviews: [
-            logoImageView,
-            titleLabel,
-            subtitleLabel,
-            emailLabel,
-            emailTextField,
-            passwordLabel,
-            passwordTextField,
-            forgotPasswordButton,
-            loginButton,
-            orLabel,
-            googleButton,
-            appleButton,
-            signupContainer
-        ])
+        contentStackView.addArrangedSubview(logoImageView)
+        contentStackView.addArrangedSubview(titleLabel)
+        contentStackView.addArrangedSubview(subtitleLabel)
+        contentStackView.addArrangedSubview(emailLabel)
+        contentStackView.addArrangedSubview(emailTextField)
+        contentStackView.addArrangedSubview(passwordLabel)
+        contentStackView.addArrangedSubview(passwordTextField)
+        contentStackView.addArrangedSubview(forgotPasswordButton)
+        contentStackView.addArrangedSubview(loginButton)
+        contentStackView.addArrangedSubview(orLabel)
+        contentStackView.addArrangedSubview(googleButton)
+        contentStackView.addArrangedSubview(appleButton)
+        contentStackView.addArrangedSubview(signupContainer)
         
-        stack.axis = .vertical
-        stack.alignment = .fill
-        stack.spacing = 14
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(stack)
+        addSubview(contentStackView)
+        addSubview(loadingIndicator)
         
         NSLayoutConstraint.activate([
             logoImageView.heightAnchor.constraint(equalToConstant: 96),
             logoImageView.widthAnchor.constraint(equalToConstant: 96),
             
-            stack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 32),
-            stack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32),
-            stack.centerYAnchor.constraint(equalTo: centerYAnchor),
+            contentStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 32),
+            contentStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32),
+            contentStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
             
             emailTextField.heightAnchor.constraint(equalToConstant: 56),
             passwordTextField.heightAnchor.constraint(equalToConstant: 56),
             loginButton.heightAnchor.constraint(equalToConstant: 56),
             googleButton.heightAnchor.constraint(equalToConstant: 56),
-            appleButton.heightAnchor.constraint(equalToConstant: 56)
+            appleButton.heightAnchor.constraint(equalToConstant: 56),
+            
+            loadingIndicator.centerXAnchor.constraint(equalTo: centerXAnchor),
+            loadingIndicator.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
+    }
+    
+    // MARK: - Public Methods
+    func setLoading(_ isLoading: Bool) {
+        contentStackView.isUserInteractionEnabled = !isLoading
+        contentStackView.alpha = isLoading ? 0.5 : 1.0
+        
+        if isLoading {
+            loadingIndicator.startAnimating()
+        } else {
+            loadingIndicator.stopAnimating()
+        }
     }
     
     // MARK: - Actions
