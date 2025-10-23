@@ -1,0 +1,31 @@
+"login.title" = "Welcome Back!";
+"login.subtitle" = "Log in to try new looks.";
+"login.emailLabel" = "Email";
+"login.emailPlaceholder" = "Enter your email";
+"login.passwordLabel" = "Password";
+"login.passwordPlaceholder" = "Enter your password";
+"login.forgotPassword" = "Forgot Password?";
+"login.button" = "Login";
+"login.or" = "OR";
+"login.googleButton" = "Continue with Google";
+"login.appleButton" = "Continue with Apple";
+"login.signupPrompt" = "Don't have an account?";
+"login.signupButton" = "Sign up";
+
+"alert.errorTitle" = "Error";
+"alert.ok" = "OK";
+
+"error.emailPasswordRequired" = "Please enter email and password";
+"error.invalidEmail" = "Please enter a valid email address";
+
+"appleSignIn.error.noCredential" = "Unable to retrieve Apple ID Credential";
+"appleSignIn.error.invalidState" = "Invalid state: A login callback was received, but no login request was sent.";
+"appleSignIn.error.noIdentityToken" = "Unable to fetch identity token";
+"appleSignIn.error.serialization" = "Unable to serialize token string from data";
+"appleSignIn.error.generic" = "Sign in with Apple errored: %@";
+
+"auth.error.noClientID" = "Firebase client ID not found";
+"auth.error.noUser" = "No user data received from Google";
+"auth.error.noIDToken" = "No ID token received from Google";
+"auth.error.signInFailed" = "Sign in failed: %@";
+"auth.error.firebaseAuthFailed" = "Firebase authentication failed: %@";

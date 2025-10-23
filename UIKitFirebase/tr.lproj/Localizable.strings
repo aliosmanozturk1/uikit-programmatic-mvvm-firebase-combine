@@ -1,0 +1,31 @@
+"login.title" = "Tekrar Hoş Geldin!";
+"login.subtitle" = "Yeni stilleri denemek için giriş yap.";
+"login.emailLabel" = "E-posta";
+"login.emailPlaceholder" = "E-postanı gir";
+"login.passwordLabel" = "Şifre";
+"login.passwordPlaceholder" = "Şifreni gir";
+"login.forgotPassword" = "Şifreni mi unuttun?";
+"login.button" = "Giriş Yap";
+"login.or" = "VEYA";
+"login.googleButton" = "Google ile devam et";
+"login.appleButton" = "Apple ile devam et";
+"login.signupPrompt" = "Hesabın yok mu?";
+"login.signupButton" = "Kayıt ol";
+
+"alert.errorTitle" = "Hata";
+"alert.ok" = "Tamam";
+
+"error.emailPasswordRequired" = "Lütfen e-posta ve şifre gir";
+"error.invalidEmail" = "Lütfen geçerli bir e-posta adresi gir";
+
+"appleSignIn.error.noCredential" = "Apple Kimliği bilgileri alınamadı";
+"appleSignIn.error.invalidState" = "Geçersiz durum: Bir giriş isteği gönderilmeden geri dönüş alındı.";
+"appleSignIn.error.noIdentityToken" = "Kimlik jetonu alınamadı";
+"appleSignIn.error.serialization" = "Jeton verisi çözümlenemedi";
+"appleSignIn.error.generic" = "Apple ile giriş hatası: %@";
+
+"auth.error.noClientID" = "Firebase istemci kimliği bulunamadı";
+"auth.error.noUser" = "Google'dan kullanıcı verisi alınamadı";
+"auth.error.noIDToken" = "Google'dan kimlik jetonu alınamadı";
+"auth.error.signInFailed" = "Giriş başarısız: %@";
+"auth.error.firebaseAuthFailed" = "Firebase kimlik doğrulaması başarısız: %@";
