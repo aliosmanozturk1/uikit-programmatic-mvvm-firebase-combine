@@ -44,8 +44,12 @@ class LoginViewController: UIViewController {
     }
     
     private func showAlert(message: String) {
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        let alert = UIAlertController(
+            title: NSLocalizedString("alert.errorTitle", comment: "Generic error alert title"),
+            message: message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: NSLocalizedString("alert.ok", comment: "Alert confirm action"), style: .default))
         present(alert, animated: true)
     }
 }
@@ -104,22 +108,22 @@ extension LoginViewController: LoginViewModelDelegate {
 extension LoginViewController: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else {
-            showAlert(message: "Unable to retrieve Apple ID Credential")
+            showAlert(message: NSLocalizedString("appleSignIn.error.noCredential", comment: "Apple ID credential failure message"))
             return
         }
         
         guard let nonce = currentNonce else {
-            showAlert(message: "Invalid state: A login callback was received, but no login request was sent.")
+            showAlert(message: NSLocalizedString("appleSignIn.error.invalidState", comment: "Apple sign-in invalid nonce state message"))
             return
         }
         
         guard let appleIDToken = appleIDCredential.identityToken else {
-            showAlert(message: "Unable to fetch identity token")
+            showAlert(message: NSLocalizedString("appleSignIn.error.noIdentityToken", comment: "Apple sign-in identity token missing message"))
             return
         }
         
         guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
-            showAlert(message: "Unable to serialize token string from data")
+            showAlert(message: NSLocalizedString("appleSignIn.error.serialization", comment: "Apple sign-in token serialization failure message"))
             return
         }
         
@@ -127,7 +131,11 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
     }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        showAlert(message: "Sign in with Apple errored: \(error.localizedDescription)")
+        let message = String(
+            format: NSLocalizedString("appleSignIn.error.generic", comment: "Generic Apple sign-in error message"),
+            error.localizedDescription
+        )
+        showAlert(message: message)
     }
 }
 

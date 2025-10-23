@@ -32,7 +32,7 @@ class LoginView: UIView {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Welcome Back!"
+        label.text = NSLocalizedString("login.title", comment: "Login screen title")
         label.font = UIFont(name: "SpaceGrotesk-Bold", size: 28)
         label.textColor = .white
         label.textAlignment = .center
@@ -41,7 +41,7 @@ class LoginView: UIView {
     
     private lazy var subtitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Log in to try new looks."
+        label.text = NSLocalizedString("login.subtitle", comment: "Login screen subtitle")
         label.font = UIFont(name: "SpaceGrotesk-Regular", size: 16)
         label.textColor = UIColor(white: 0.7, alpha: 1)
         label.textAlignment = .center
@@ -50,7 +50,7 @@ class LoginView: UIView {
     
     private lazy var emailLabel: UILabel = {
         let label = UILabel()
-        label.text = "Email"
+        label.text = NSLocalizedString("login.emailLabel", comment: "Email field title")
         label.font = UIFont(name: "SpaceGrotesk-Medium", size: 14)
         label.textColor = .white
         return label
@@ -58,7 +58,8 @@ class LoginView: UIView {
     
     private lazy var emailTextField: UITextField = {
         let tf = UITextField()
-        tf.placeholder = "Enter your email"
+        let placeholder = NSLocalizedString("login.emailPlaceholder", comment: "Email field placeholder")
+        tf.placeholder = placeholder
         tf.textColor = .white
         tf.autocapitalizationType = .none
         tf.keyboardType = .emailAddress
@@ -66,7 +67,7 @@ class LoginView: UIView {
         tf.layer.cornerRadius = 20
         tf.backgroundColor = UIColor(red: 35/255, green: 36/255, blue: 54/255, alpha: 1)
         tf.attributedPlaceholder = NSAttributedString(
-            string: "Enter your email",
+            string: placeholder,
             attributes: [.foregroundColor: UIColor(white: 0.6, alpha: 1)]
         )
         return tf
@@ -74,7 +75,7 @@ class LoginView: UIView {
     
     private lazy var passwordLabel: UILabel = {
         let label = UILabel()
-        label.text = "Password"
+        label.text = NSLocalizedString("login.passwordLabel", comment: "Password field title")
         label.font = UIFont(name: "SpaceGrotesk-Medium", size: 14)
         label.textColor = .white
         return label
@@ -82,14 +83,15 @@ class LoginView: UIView {
     
     private lazy var passwordTextField: UITextField = {
         let tf = UITextField()
-        tf.placeholder = "Enter your password"
+        let placeholder = NSLocalizedString("login.passwordPlaceholder", comment: "Password field placeholder")
+        tf.placeholder = placeholder
         tf.isSecureTextEntry = true
         tf.textColor = .white
         tf.setLeftPaddingPoints(16)
         tf.layer.cornerRadius = 20
         tf.backgroundColor = UIColor(red: 35/255, green: 36/255, blue: 54/255, alpha: 1)
         tf.attributedPlaceholder = NSAttributedString(
-            string: "Enter your password",
+            string: placeholder,
             attributes: [.foregroundColor: UIColor(white: 0.6, alpha: 1)]
         )
         return tf
@@ -97,7 +99,7 @@ class LoginView: UIView {
     
     private lazy var forgotPasswordButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Forgot Password?", for: .normal)
+        button.setTitle(NSLocalizedString("login.forgotPassword", comment: "Forgot password action"), for: .normal)
         button.setTitleColor(UIColor(red: 127/255, green: 19/255, blue: 236/255, alpha: 1), for: .normal)
         button.titleLabel?.font = UIFont(name: "SpaceGrotesk-Medium", size: 14)
         button.contentHorizontalAlignment = .right
@@ -107,7 +109,7 @@ class LoginView: UIView {
     
     private lazy var loginButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Login", for: .normal)
+        button.setTitle(NSLocalizedString("login.button", comment: "Login action button title"), for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = UIColor(red: 127/255, green: 19/255, blue: 236/255, alpha: 1)
         button.titleLabel?.font = UIFont(name: "SpaceGrotesk-Bold", size: 18)
@@ -118,7 +120,7 @@ class LoginView: UIView {
     
     private lazy var orLabel: UILabel = {
         let label = UILabel()
-        label.text = "OR"
+        label.text = NSLocalizedString("login.or", comment: "Separator text")
         label.textColor = UIColor(white: 0.6, alpha: 1)
         label.textAlignment = .center
         label.font = UIFont(name: "SpaceGrotesk-Regular", size: 14)
@@ -127,7 +129,7 @@ class LoginView: UIView {
     
     private lazy var googleButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Continue with Google", for: .normal)
+        button.setTitle(NSLocalizedString("login.googleButton", comment: "Continue with Google button title"), for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = UIColor(red: 35/255, green: 36/255, blue: 54/255, alpha: 1)
         button.layer.cornerRadius = 20
@@ -148,7 +150,7 @@ class LoginView: UIView {
     
     private lazy var appleButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Continue with Apple", for: .normal)
+        button.setTitle(NSLocalizedString("login.appleButton", comment: "Continue with Apple button title"), for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .black
         button.layer.cornerRadius = 20
@@ -170,7 +172,7 @@ class LoginView: UIView {
     
     private lazy var signupLabel: UILabel = {
         let label = UILabel()
-        label.text = "Don't have an account?"
+        label.text = NSLocalizedString("login.signupPrompt", comment: "Signup prompt text")
         label.font = UIFont(name: "SpaceGrotesk-Regular", size: 14)
         label.textColor = UIColor(white: 0.6, alpha: 1)
         label.textAlignment = .center
@@ -179,7 +181,7 @@ class LoginView: UIView {
     
     private lazy var signupButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Sign up", for: .normal)
+        button.setTitle(NSLocalizedString("login.signupButton", comment: "Signup action button title"), for: .normal)
         button.setTitleColor(UIColor(red: 127/255, green: 19/255, blue: 236/255, alpha: 1), for: .normal)
         button.titleLabel?.font = UIFont(name: "SpaceGrotesk-Regular", size: 14)
         button.addTarget(self, action: #selector(signupTapped), for: .touchUpInside)

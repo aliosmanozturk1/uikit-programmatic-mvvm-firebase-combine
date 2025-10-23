@@ -32,12 +32,18 @@ class LoginViewModel {
         // Validate input
         guard let email = email, !email.isEmpty,
               let password = password, !password.isEmpty else {
-            delegate?.loginViewModel(self, didFailWithError: "Please enter email and password")
+            delegate?.loginViewModel(
+                self,
+                didFailWithError: NSLocalizedString("error.emailPasswordRequired", comment: "Missing email or password message")
+            )
             return
         }
         
         guard isValidEmail(email) else {
-            delegate?.loginViewModel(self, didFailWithError: "Please enter a valid email address")
+            delegate?.loginViewModel(
+                self,
+                didFailWithError: NSLocalizedString("error.invalidEmail", comment: "Invalid email address message")
+            )
             return
         }
         

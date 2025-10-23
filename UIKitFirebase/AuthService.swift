@@ -22,15 +22,21 @@ enum AuthError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .noClientID:
-            return "Firebase client ID not found"
+            return NSLocalizedString("auth.error.noClientID", comment: "Missing Firebase client ID error message")
         case .noUser:
-            return "No user data received from Google"
+            return NSLocalizedString("auth.error.noUser", comment: "Missing Google user data error message")
         case .noIDToken:
-            return "No ID token received from Google"
+            return NSLocalizedString("auth.error.noIDToken", comment: "Missing Google ID token error message")
         case .signInFailed(let error):
-            return "Sign in failed: \(error.localizedDescription)"
+            return String(
+                format: NSLocalizedString("auth.error.signInFailed", comment: "Generic sign-in failed message"),
+                error.localizedDescription
+            )
         case .firebaseAuthFailed(let error):
-            return "Firebase authentication failed: \(error.localizedDescription)"
+            return String(
+                format: NSLocalizedString("auth.error.firebaseAuthFailed", comment: "Firebase authentication failure message"),
+                error.localizedDescription
+            )
         }
     }
 }
