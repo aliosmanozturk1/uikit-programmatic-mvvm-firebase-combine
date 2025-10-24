@@ -12,11 +12,26 @@
 "login.signupPrompt" = "Don't have an account?";
 "login.signupButton" = "Sign up";
 
+"register.title" = "Create an Account";
+"register.subtitle" = "Sign up to try new looks.";
+"register.emailLabel" = "Email";
+"register.emailPlaceholder" = "Enter your email";
+"register.passwordLabel" = "Password";
+"register.passwordPlaceholder" = "Create a password";
+"register.confirmPasswordLabel" = "Confirm Password";
+"register.confirmPasswordPlaceholder" = "Re-enter your password";
+"register.button" = "Create Account";
+"register.loginPrompt" = "Already have an account?";
+"register.loginButton" = "Log in";
+
 "alert.errorTitle" = "Error";
 "alert.ok" = "OK";
 
 "error.emailPasswordRequired" = "Please enter email and password";
 "error.invalidEmail" = "Please enter a valid email address";
+"error.emailPasswordConfirmRequired" = "Please enter email, password, and confirm password";
+"error.passwordTooShort" = "Password must be at least 6 characters";
+"error.passwordMismatch" = "Passwords do not match";
 
 "appleSignIn.error.noCredential" = "Unable to retrieve Apple ID Credential";
 "appleSignIn.error.invalidState" = "Invalid state: A login callback was received, but no login request was sent.";
@@ -29,3 +44,6 @@
 "auth.error.noIDToken" = "No ID token received from Google";
 "auth.error.signInFailed" = "Sign in failed: %@";
 "auth.error.firebaseAuthFailed" = "Firebase authentication failed: %@";
+
+"legal.terms" = "Terms of Service";
+"legal.privacy" = "Privacy Policy";

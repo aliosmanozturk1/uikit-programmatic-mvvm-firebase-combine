@@ -45,6 +45,7 @@ protocol AuthServiceProtocol {
     func signInWithGoogle(presenting viewController: UIViewController) async throws -> User
     func signInWithApple(idToken: String, nonce: String, fullName: PersonNameComponents?) async throws -> User
     func signInWithEmail(_ email: String, password: String) async throws -> User
+    func signUpWithEmail(_ email: String, password: String) async throws -> User
     func signOut() throws
     func getCurrentUser() -> User?
 }
@@ -110,6 +111,16 @@ class AuthService: AuthServiceProtocol {
     func signInWithEmail(_ email: String, password: String) async throws -> User {
         do {
             let authResult = try await Auth.auth().signIn(withEmail: email, password: password)
+            return authResult.user
+        } catch {
+            throw AuthError.firebaseAuthFailed(error)
+        }
+    }
+    
+    // MARK: - Email Sign Up
+    func signUpWithEmail(_ email: String, password: String) async throws -> User {
+        do {
+            let authResult = try await Auth.auth().createUser(withEmail: email, password: password)
             return authResult.user
         } catch {
             throw AuthError.firebaseAuthFailed(error)

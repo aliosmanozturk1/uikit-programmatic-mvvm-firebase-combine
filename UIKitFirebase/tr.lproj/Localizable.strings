@@ -12,11 +12,26 @@
 "login.signupPrompt" = "Hesabın yok mu?";
 "login.signupButton" = "Kayıt ol";
 
+"register.title" = "Hesap Oluştur";
+"register.subtitle" = "Yeni stilleri denemek için kaydol.";
+"register.emailLabel" = "E-posta";
+"register.emailPlaceholder" = "E-postanı gir";
+"register.passwordLabel" = "Şifre";
+"register.passwordPlaceholder" = "Bir şifre oluştur";
+"register.confirmPasswordLabel" = "Şifreyi Onayla";
+"register.confirmPasswordPlaceholder" = "Şifreni tekrar gir";
+"register.button" = "Hesap Oluştur";
+"register.loginPrompt" = "Zaten hesabın var mı?";
+"register.loginButton" = "Giriş yap";
+
 "alert.errorTitle" = "Hata";
 "alert.ok" = "Tamam";
 
 "error.emailPasswordRequired" = "Lütfen e-posta ve şifre gir";
 "error.invalidEmail" = "Lütfen geçerli bir e-posta adresi gir";
+"error.emailPasswordConfirmRequired" = "Lütfen e-posta, şifre ve şifre tekrarı gir";
+"error.passwordTooShort" = "Şifre en az 6 karakter olmalı";
+"error.passwordMismatch" = "Şifreler eşleşmiyor";
 
 "appleSignIn.error.noCredential" = "Apple Kimliği bilgileri alınamadı";
 "appleSignIn.error.invalidState" = "Geçersiz durum: Bir giriş isteği gönderilmeden geri dönüş alındı.";
@@ -29,3 +44,6 @@
 "auth.error.noIDToken" = "Google'dan kimlik jetonu alınamadı";
 "auth.error.signInFailed" = "Giriş başarısız: %@";
 "auth.error.firebaseAuthFailed" = "Firebase kimlik doğrulaması başarısız: %@";
+
+"legal.terms" = "Kullanım Sözleşmesi";
+"legal.privacy" = "Gizlilik Politikası";

@@ -8,12 +8,16 @@
 import UIKit
 import FirebaseAuth
 import AuthenticationServices
+import SafariServices
 
 class LoginViewController: UIViewController {
     
     // MARK: - Properties
     private let loginView = LoginView()
     private let viewModel = LoginViewModel()
+    
+    private let termsURL = URL(string: "https://example.com/terms")
+    private let privacyURL = URL(string: "https://example.com/privacy")
     
     private var currentNonce: String?
     
@@ -31,6 +35,11 @@ class LoginViewController: UIViewController {
         if let user = viewModel.checkCurrentUser() {
             navigateToHome(user: user)
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
     // MARK: - Helper Methods
@@ -51,6 +60,12 @@ class LoginViewController: UIViewController {
         )
         alert.addAction(UIAlertAction(title: NSLocalizedString("alert.ok", comment: "Alert confirm action"), style: .default))
         present(alert, animated: true)
+    }
+    
+    private func openLegalURL(_ url: URL?) {
+        guard let url = url else { return }
+        let safariVC = SFSafariViewController(url: url)
+        present(safariVC, animated: true)
     }
 }
 
@@ -85,8 +100,16 @@ extension LoginViewController: LoginViewDelegate {
         }
     
     func loginViewDidTapSignup(_ view: LoginView) {
-        // Navigate to signup screen
-        print("Signup tapped")
+        let registerVC = RegisterViewController()
+        navigationController?.pushViewController(registerVC, animated: true)
+    }
+    
+    func loginViewDidTapTerms(_ view: LoginView) {
+        openLegalURL(termsURL)
+    }
+    
+    func loginViewDidTapPrivacy(_ view: LoginView) {
+        openLegalURL(privacyURL)
     }
 }
 
